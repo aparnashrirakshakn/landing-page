@@ -19,7 +19,7 @@
 */
 let sectionsList = [...document.getElementsByTagName('section')];
 let navbarList = document.getElementById('navbar__list');
-
+let numberOfSections = 0;
 /**
  * End Global Variables
  * Start Helper Functions
@@ -37,6 +37,7 @@ let navbarList = document.getElementById('navbar__list');
 // build the nav
 function buildNavbarMenu(){
     sectionsList.forEach(section => {
+        numberOfSections++;
         const listItem = document.createElement('li');
         listItem.innerText = section.dataset.nav;
         listItem.className = 'menu__link';
@@ -49,7 +50,11 @@ function buildNavbarMenu(){
 
 
 // Scroll to anchor ID using scrollTO event
-
+function scrollTo(target) {
+    $('html,body').animate({
+    scrollTop: target ? target.offset().top + (-(50 * numberOfSections)) : 0
+    }, 'slow');
+}
 
 /**
  * End Main Functions
