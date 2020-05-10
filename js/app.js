@@ -35,7 +35,15 @@ let navbarList = document.getElementById('navbar__list');
 */
 
 // build the nav
-
+function buildNavbarMenu(){
+    sectionsList.forEach(section => {
+        const listItem = document.createElement('li');
+        listItem.innerText = section.dataset.nav;
+        listItem.className = 'menu__link';
+        listItem.onclick = () => scrollTo($(`#${section.id}`));
+        navbarList.appendChild(listItem);
+        });
+}
 
 // Add class 'active' to section when near top of viewport
 
@@ -50,6 +58,7 @@ let navbarList = document.getElementById('navbar__list');
 */
 
 // Build menu 
+buildNavbarMenu();
 
 // Scroll to section on link click
 
