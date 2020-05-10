@@ -17,7 +17,8 @@
  * Define Global Variables
  * 
 */
-
+let sectionsList = [...document.getElementsByTagName('section')];
+let navbarList = document.getElementById('navbar__list');
 
 /**
  * End Global Variables
