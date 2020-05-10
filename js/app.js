@@ -26,7 +26,22 @@ let numberOfSections = 0;
  * 
 */
 
+function scrollTo(target) {
+    $('html,body').animate({
+    scrollTop: target ? target.offset().top + (-(50 * numberOfSections)) : (-(50 * numberOfSections))
+    }, 'slow');
+}
 
+// this helper function has been borrowed from https://gomakethings.com/how-to-test-if-an-element-is-in-the-viewport-with-vanilla-javascript/
+var isInViewport = function (elem) {
+    var bounding = elem.getBoundingClientRect();
+    return (
+        bounding.top >= 0 &&
+        bounding.left >= 0 &&
+        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+};
 
 /**
  * End Helper Functions
@@ -49,13 +64,6 @@ function buildNavbarMenu(){
 // Add class 'active' to section when near top of viewport
 
 
-// Scroll to anchor ID using scrollTO event
-function scrollTo(target) {
-    $('html,body').animate({
-    scrollTop: target ? target.offset().top + (-(50 * numberOfSections)) : 0
-    }, 'slow');
-}
-
 /**
  * End Main Functions
  * Begin Events
@@ -65,6 +73,8 @@ function scrollTo(target) {
 // Build menu 
 buildNavbarMenu();
 
-// Scroll to section on link click
+// Scroll to be on the first section
+scrollTo();
 
-// Set sections as active
+
+
