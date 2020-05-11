@@ -19,21 +19,18 @@
 */
 let sectionsList = [...document.getElementsByTagName('section')];
 let navbarList = document.getElementById('navbar__list');
-let numberOfSections = 0;
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
 
-function scrollTo(target) {
-    $('html,body').animate({
-    scrollTop: target ? target.offset().top + (-(50 * numberOfSections)) : (-(50 * numberOfSections))
-    }, 'slow');
+function listItemClickEventListener(event) {
+    
 }
 
 // this helper function has been borrowed from https://gomakethings.com/how-to-test-if-an-element-is-in-the-viewport-with-vanilla-javascript/
-var isInViewport = function (elem) {
+let isInViewport = function (elem) {
     var bounding = elem.getBoundingClientRect();
     return (
         bounding.top >= 0 &&
@@ -52,13 +49,12 @@ var isInViewport = function (elem) {
 // build the nav
 function buildNavbarMenu(){
     sectionsList.forEach(section => {
-        numberOfSections++;
         const listItem = document.createElement('li');
         listItem.innerText = section.dataset.nav;
         listItem.className = 'menu__link';
-        listItem.onclick = () => scrollTo($(`#${section.id}`));
+        listItem.onclick = listItemClickEventListener;
         navbarList.appendChild(listItem);
-        });
+    });
 }
 
 // Add class 'active' to section when near top of viewport
