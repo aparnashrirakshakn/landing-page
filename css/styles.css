@@ -221,3 +221,8 @@ section.active .landing__container::after {
 		           rotate(-360deg);
 	}
 }
+
+li.item-active {
+    background: #333;
+    color: #fff !important;
+}
