@@ -13,6 +13,9 @@
  * 
 */
 
+// add scroll event listener 
+window.addEventListener('scroll', scrollEventListener);
+
 /**
  * Define Global Variables
  * 
@@ -25,7 +28,52 @@ let navbarList = document.getElementById('navbar__list');
  * 
 */
 
+function makePreviousActiveClassInactive() {
+    document.getElementsByClassName('active')[0].classList.remove('active');
+    document.getElementsByClassName('item-active')[0].classList.remove('item-active');
+}
+
+function getSection(innerHTMLText) {
+    return sectionsList.filter(section => section.getAttribute('data-nav') === innerHTMLText)[0];
+}
+
 function listItemClickEventListener(event) {
+    // get section and scroll into view
+    const scrollToSection = getSection(event.target.innerHTML);
+    scrollToSection.scrollIntoView({
+        behavior: 'smooth'
+    });
+
+    // make all the sections and list items inactive
+    makePreviousActiveClassInactive();
+
+    // make the scroll to section active
+    scrollToSection.classList.add('active');
+    
+    // make navbar list item active
+    event.target.classList.add('item-active');
+    
+}
+
+function scrollEventListener(event) {
+    
+    // check if the section is in viewport, and make the section and navbar list item active if it is
+    sectionsList.forEach(section => {
+        if(isInViewport(section)) {
+            // make all the sections inactive
+            makePreviousActiveClassInactive();
+            
+            // mark section active and make navbar list item active
+            section.classList.add('active');
+            
+            // // make navbar list item active
+            const listItemId = `list${section.id.substr(7)}`;
+            document.getElementById(`${listItemId}`).classList.add('item-active');
+        }
+        else {
+            return;
+        }
+    })
     
 }
 
@@ -48,17 +96,15 @@ let isInViewport = function (elem) {
 
 // build the nav
 function buildNavbarMenu(){
-    sectionsList.forEach(section => {
+    sectionsList.forEach((section, index) => {
         const listItem = document.createElement('li');
+        listItem.id = `list${index+1}`;
         listItem.innerText = section.dataset.nav;
-        listItem.className = 'menu__link';
+        listItem.className = section.id === 'section1' ? 'menu__link item-active' : 'menu__link';
         listItem.onclick = listItemClickEventListener;
         navbarList.appendChild(listItem);
     });
 }
-
-// Add class 'active' to section when near top of viewport
-
 
 /**
  * End Main Functions
@@ -69,8 +115,6 @@ function buildNavbarMenu(){
 // Build menu 
 buildNavbarMenu();
 
-// Scroll to be on the first section
-scrollTo();
 
 
 
